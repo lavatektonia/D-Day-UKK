@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Livewire\WaitingAccess;
 
 // Halaman Landing
@@ -13,6 +14,14 @@ Route::get('/', function () {
 Route::get('/student-access', function () {
     return view('auth'); 
 })->name('studentAccess');
+
+//logout
+Route::get('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/'); // ganti '/' dengan halaman landing kamu
+})->name('logout');
 
 //waiting-access
 Route::get('/waiting-access', function () {
